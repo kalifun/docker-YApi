@@ -15,9 +15,7 @@ jobs:
         with:
           buildx-version: v0.4.1
           qemu-version: 4.2.0-7
+      - name: login
+        run: docker login --username kalifun --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: build & publish
-        run: |
-          docker login \
-            --username kalifun \
-            --password ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          docker build --push --tag kalifun/yapi:latest
+        run: docker build --push --tag kalifun/yapi:latest
