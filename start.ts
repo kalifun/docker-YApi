@@ -156,16 +156,16 @@ type IConfigShape = typeof configShape
 
 type GetType<T extends Record<any, any>> = {
   [K in keyof T]: T[K] extends StringConstructor
-    ? string
-    : T[K] extends BooleanConstructor
-    ? boolean
-    : T[K] extends NumberConstructor
-    ? number
-    : T[K] extends Record<any, any>
-    ? GetType<T[K]>
-    : T[K] extends [infer P]
-    ? Array<GetType<P>>
-    : any
+  ? string
+  : T[K] extends BooleanConstructor
+  ? boolean
+  : T[K] extends NumberConstructor
+  ? number
+  : T[K] extends Record<any, any>
+  ? GetType<T[K]>
+  : T[K] extends [infer P]
+  ? Array<GetType<P>>
+  : any
 }
 
 export type IConfig = GetType<IConfigShape>
@@ -180,8 +180,8 @@ class ConfigParser {
     return fs.existsSync('/yapi/config.js')
       ? require('/yapi/config.js')
       : fs.existsSync('/yapi/config.json')
-      ? JSON.parse(fs.readFileSync('/yapi/config.json').toString())
-      : {}
+        ? JSON.parse(fs.readFileSync('/yapi/config.json').toString())
+        : {}
   }
 
   /**
@@ -207,16 +207,16 @@ class ConfigParser {
         const envKey = envPath.concat(KEY).join('_')
         const envValue = process.env[envKey]
         if (envValue != null) {
-          ;(configCtx as any)[key] =
+          ; (configCtx as any)[key] =
             shape === Boolean
               ? !Helper.isFalsy(envValue)
               : Array.isArray(shape) || (shape as any) === JSON
-              ? JSON.parse(envValue.trim())
-              : (shape as any)(envValue)
+                ? JSON.parse(envValue.trim())
+                : (shape as any)(envValue)
         }
       } else {
         if ((configCtx as any)[key] == null) {
-          ;(configCtx as any)[key] = {}
+          ; (configCtx as any)[key] = {}
         }
         ConfigParser.extractConfigFromEnv(
           (configCtx as any)[key],
@@ -243,7 +243,7 @@ class ConfigParser {
         plugins.push(plugin)
       }
     }
-    ;(config as any).plugins = plugins
+    ; (config as any).plugins = plugins
     return config
   }
 
@@ -269,7 +269,7 @@ class BootstrapServer {
 
   logs: string[] = []
 
-  constructor(private port: number) {}
+  constructor(private port: number) { }
 
   /**
    * 日志记录。
@@ -384,10 +384,9 @@ class Main {
         await Helper.exec(
           `
             cd /yapi/vendors
-            yarn add ${packages} ${
-            this.config.npmRegistry
-              ? `--registry=${this.config.npmRegistry}`
-              : ''
+            yarn add ${packages} ${this.config.npmRegistry
+            ? `--registry=${this.config.npmRegistry}`
+            : ''
           }
             yarn build-client
           `,

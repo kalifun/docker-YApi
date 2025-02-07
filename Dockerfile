@@ -1,9 +1,9 @@
 ######## 构建 ########
-FROM --platform=${BUILDPLATFORM:-amd64} node:12.16.3-alpine3.11 as builder
+FROM --platform=${BUILDPLATFORM:-amd64} node:lts-alpine3.21 as builder
 
 # 安装构建工具
-RUN apk add --update --no-cache ca-certificates curl wget cmake build-base git bash python make gcc g++ zlib-dev autoconf automake file nasm \
-  && update-ca-certificates
+#RUN apk add --update --no-cache ca-certificates curl wget cmake build-base git bash python make gcc g++ zlib-dev autoconf automake file nasm && update-ca-certificates
+RUN apk add --update --no-cache build-base git bash vim
 
 # YApi 版本
 ENV YAPI_VERSION=1.12.0
@@ -28,6 +28,8 @@ RUN cp /yapi/scripts/start.js ./start.js
 # 执行一些准备工作
 RUN node /yapi/scripts/prepare.js $(pwd)
 
+RUN yarn config set registry https://registry.npmmirror.com/
+
 # 安装依赖
 RUN yarn
 
@@ -45,7 +47,7 @@ RUN rm -rf /yapi/scripts
 
 
 ######## 镜像 ########
-FROM node:12.16.3-alpine3.11
+FROM node:lts-alpine3.21
 
 WORKDIR /yapi
 

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc",
-    "docker-build": "docker build -t jayfong/yapi:latest .",
+    "docker-build": "docker build -t kalifun/yapi:latest .",
     "docker-down": "docker-compose down",
     "docker-up": "docker-compose down && docker-compose up"
   },

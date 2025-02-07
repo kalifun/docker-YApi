@@ -4,11 +4,22 @@ import { IConfig } from './start'
 
 async function prepare(rootDir: string) {
   // 内置插件
+  // const builtInPlugins: IConfig['plugins'] = [
+  //   {
+  //     name: 'add-user',
+  //     options: {} as any,
+  //   },
+  //   {
+  //     name: 'gitlab',
+  //     options: {} as any,
+  //   }
+  // ]
+
   const builtInPlugins: IConfig['plugins'] = [
     {
-      name: 'add-user',
+      name: 'gitlab',
       options: {} as any,
-    },
+    }
   ]
 
   // 写入默认配置文件
